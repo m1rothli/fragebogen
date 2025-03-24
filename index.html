@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AQ Fragebogen (Seitenweise)</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AQ Fragebogen</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     body { font-family: Arial; max-width: 900px; margin: auto; padding: 20px; }
     .question-page { display: none; }
@@ -11,11 +12,15 @@
     .question { margin-bottom: 20px; }
     .navigation { text-align: center; margin-top: 30px; }
     button { font-size: 16px; padding: 10px 20px; margin: 5px; }
-    #result { margin-top: 40px; font-weight: bold; text-align: center; }
+    #result { margin-top: 40px; font-weight: bold; text-align: center; white-space: pre-wrap; }
+    .progress-container { background: #eee; height: 20px; border-radius: 10px; overflow: hidden; margin: 20px 0; }
+    .progress-bar { height: 100%; background: #4caf50; width: 0%; transition: width 0.3s ease; }
   </style>
 </head>
 <body>
 <h1>AQ Fragebogen</h1>
+<div class="progress-container"><div id="progressBar" class="progress-bar"></div></div>
+<div id="progressText" style="text-align:center; font-weight:bold;">Fortschritt: 0 von 50 Fragen (0%)</div>
 <form id="aqForm">
 <div class="question-page active">
 
@@ -535,9 +540,9 @@
   <button type="button" id="submitBtn" style="display:none;">Ergebnis anzeigen</button>
 </div>
 <div id="result"></div>
-
 <script>
 let currentPage = 0;
+const totalQuestions = 50;
 const pages = document.querySelectorAll(".question-page");
 
 function showPage(index) {
@@ -545,6 +550,7 @@ function showPage(index) {
   document.getElementById("prevBtn").style.display = index === 0 ? "none" : "inline-block";
   document.getElementById("nextBtn").style.display = index === pages.length - 1 ? "none" : "inline-block";
   document.getElementById("submitBtn").style.display = index === pages.length - 1 ? "inline-block" : "none";
+  updateProgress();
 }
 
 document.getElementById("nextBtn").addEventListener("click", () => {
@@ -553,7 +559,6 @@ document.getElementById("nextBtn").addEventListener("click", () => {
     showPage(currentPage);
   }
 });
-
 document.getElementById("prevBtn").addEventListener("click", () => {
   if (currentPage > 0) {
     currentPage--;
@@ -561,12 +566,15 @@ document.getElementById("prevBtn").addEventListener("click", () => {
   }
 });
 
-document.getElementById("submitBtn").addEventListener("click", () => {
+document.getElementById("submitBtn").addEventListener("click", async () => {
   const formData = new FormData(document.getElementById("aqForm"));
   let score = 0;
-  for (let i = 0; i < 50; i++) {
+  let output = "AQ-Fragebogen Antworten:\n\n";
+  for (let i = 0; i < totalQuestions; i++) {
     const val = formData.get("q" + i);
     if (val === "0" || val === "3") score++;
+    const label = ["Ich stimme eindeutig zu", "Ich stimme ein wenig zu", "Ich stimme eher nicht zu", "Ich stimme überhaupt nicht zu"][parseInt(val)];
+    output += `${i + 1}. ${document.querySelector('legend[for="q${i}"]')?.innerText || ""}\nAntwort: ${label}\n\n`;
   }
   let interpretation = "";
   if (score <= 16) {
@@ -578,10 +586,48 @@ document.getElementById("submitBtn").addEventListener("click", () => {
   } else {
     interpretation = "Deutlicher Hinweis auf Autismus-Spektrum – ärztliche Abklärung empfohlen.";
   }
-  document.getElementById("result").innerText = "Gesamtpunktzahl: " + score + " / 50\n" + interpretation;
+  const resultText = `Gesamtpunktzahl: ${score} / 50\n${interpretation}`;
+  document.getElementById("result").innerText = resultText;
+
+  const {{ jsPDF }} = window.jspdf;
+  const doc = new jsPDF();
+  const lines = (resultText + "\n\n" + output).split("\n");
+  let y = 10;
+  doc.setFontSize(12);
+  lines.forEach(line => {
+    if (y > 280) {{ doc.addPage(); y = 10; }}
+    doc.text(line, 10, y);
+    y += 7;
+  });
+  doc.save("AQ_Ergebnisse.pdf");
 });
 
-window.onload = () => showPage(0);
+function updateProgress() {
+  let answered = 0;
+  for (let i = 0; i < totalQuestions; i++) {
+    if (localStorage.getItem("q" + i)) answered++;
+  }
+  const percent = Math.round((answered / totalQuestions) * 100);
+  document.getElementById("progressBar").style.width = percent + "%";
+  document.getElementById("progressText").innerText = `Fortschritt: ${answered} von ${totalQuestions} Fragen (${percent}%)`;
+}
+
+window.onload = () => {
+  for (let i = 0; i < totalQuestions; i++) {
+    const saved = localStorage.getItem("q" + i);
+    if (saved !== null) {
+      const input = document.querySelector(`input[name="q${i}"][value="${saved}"]`);
+      if (input) input.checked = true;
+    }
+  }
+  document.querySelectorAll("input[type=radio]").forEach(input => {
+    input.addEventListener("change", e => {
+      localStorage.setItem(e.target.name, e.target.value);
+      updateProgress();
+    });
+  });
+  showPage(0);
+};
 </script>
 </body>
 </html>
