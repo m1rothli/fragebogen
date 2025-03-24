@@ -1,95 +1,547 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AQ-Fragebogen – iPad</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AQ Fragebogen</title>
   <style>
-    body { font-family: Arial, sans-serif; max-width: 900px; margin: auto; padding: 20px; }
-    h1 { text-align: center; font-size: 26px; margin-bottom: 30px; }
-    .progress-container { width: 100%; background: #f0f0f0; border-radius: 20px; margin-bottom: 10px; height: 20px; overflow: hidden; }
-    .progress-bar { height: 100%; background: #4caf50; width: 0%; transition: width 0.3s ease; }
-    .question-page { display: none; }
-    .question-page.active { display: block; }
+    body { font-family: Arial; max-width: 900px; margin: auto; padding: 20px; }
     .question { margin-bottom: 20px; }
-    .question legend { font-weight: bold; font-size: 18px; }
-    .options label { display: block; padding: 10px; border: 1px solid #ccc; border-radius: 8px; margin-bottom: 8px; font-size: 18px; cursor: pointer; }
-    .options input[type="radio"] { transform: scale(1.5); margin-right: 12px; }
-    .navigation { text-align: center; margin-top: 20px; }
-    .navigation button { font-size: 16px; padding: 10px 20px; margin: 0 10px; }
-    #progressText { text-align:center; margin: 5px 0 20px; font-weight: bold; }
+    .navigation { text-align: center; margin-top: 30px; }
+    button { font-size: 16px; padding: 10px 20px; margin: 5px; }
+    #result { margin-top: 40px; font-weight: bold; text-align: center; }
   </style>
 </head>
 <body>
-  <h1>AQ-Fragebogen – iPad</h1>
-  <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
-  <div id="progressText">Fortschritt: 0 von 50 Fragen (0%)</div>
+  <h1>AQ Fragebogen</h1>
   <form id="aqForm">
-    <div class="question-page active">
-      <fieldset class="question">
+    
+    <div class="question">
+      <fieldset>
         <legend>1. Ich mache lieber Sachen mit anderen als alleine.</legend>
-        <div class="options">
-          <label><input type="radio" name="q0" value="0"> Ich stimme eindeutig zu</label>
-          <label><input type="radio" name="q0" value="1"> Ich stimme ein wenig zu</label>
-          <label><input type="radio" name="q0" value="2"> Ich stimme eher nicht zu</label>
-          <label><input type="radio" name="q0" value="3"> Ich stimme überhaupt nicht zu</label>
-        </div>
+        <label><input type="radio" name="q0" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q0" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q0" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q0" value="3"> Ich stimme überhaupt nicht zu</label>
       </fieldset>
     </div>
-    <div class="question-page">
-      <fieldset class="question">
+    
+    <div class="question">
+      <fieldset>
         <legend>2. Ich bevorzuge, Dinge immer wieder auf dieselbe Art und Weise zu machen.</legend>
-        <div class="options">
-          <label><input type="radio" name="q1" value="0"> Ich stimme eindeutig zu</label>
-          <label><input type="radio" name="q1" value="1"> Ich stimme ein wenig zu</label>
-          <label><input type="radio" name="q1" value="2"> Ich stimme eher nicht zu</label>
-          <label><input type="radio" name="q1" value="3"> Ich stimme überhaupt nicht zu</label>
-        </div>
+        <label><input type="radio" name="q1" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q1" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q1" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q1" value="3"> Ich stimme überhaupt nicht zu</label>
       </fieldset>
     </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>3. Wenn ich mir etwas vorzustellen versuche, fällt es mir sehr leicht, ein Bild im Kopf entstehen zu lassen.</legend>
+        <label><input type="radio" name="q2" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q2" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q2" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q2" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>4. Ich verliere mich in Aufgaben oft so, dass ich alle anderen Dinge rundherum vergesse.</legend>
+        <label><input type="radio" name="q3" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q3" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q3" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q3" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>5. Ich höre oft leise Geräusche, die andere nicht hören.</legend>
+        <label><input type="radio" name="q4" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q4" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q4" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q4" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>6. Ich merke mir oft Autonummern oder Schilder mit ähnlichen Beschriftungen.</legend>
+        <label><input type="radio" name="q5" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q5" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q5" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q5" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>7. Andere Menschen sagen mir häufig, dass das, was ich gesagt habe, unhöflich war, obwohl ich denke, es sei höflich gewesen.</legend>
+        <label><input type="radio" name="q6" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q6" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q6" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q6" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>8. Wenn ich eine Geschichte lese, kann ich mir leicht vorstellen, wie die Figuren aussehen könnten.</legend>
+        <label><input type="radio" name="q7" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q7" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q7" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q7" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>9. Datumsangaben faszinieren mich.</legend>
+        <label><input type="radio" name="q8" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q8" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q8" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q8" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>10. Ich kann in einer Gruppe leicht Gesprächen von mehreren unterschiedlichen Menschen folgen.</legend>
+        <label><input type="radio" name="q9" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q9" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q9" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q9" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>11. In sozialen Situationen fühle ich mich wohl.</legend>
+        <label><input type="radio" name="q10" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q10" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q10" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q10" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>12. Ich bemerke öfters Details, die andere Menschen nicht mitbekommen.</legend>
+        <label><input type="radio" name="q11" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q11" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q11" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q11" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>13. Ich würde lieber in die Bibliothek als zu einer Party gehen.</legend>
+        <label><input type="radio" name="q12" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q12" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q12" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q12" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>14. Mir fällt es leicht, Geschichten zu erfinden.</legend>
+        <label><input type="radio" name="q13" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q13" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q13" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q13" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>15. Ich fühle mich eher von Menschen als von Gegenständen angezogen.</legend>
+        <label><input type="radio" name="q14" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q14" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q14" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q14" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>16. Bestimmten Interessen gehe ich sehr gezielt nach und ärgere mich, wenn ich daran gehindert werde.</legend>
+        <label><input type="radio" name="q15" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q15" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q15" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q15" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>17. Ich genieße Gespräche über Land und Leute.</legend>
+        <label><input type="radio" name="q16" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q16" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q16" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q16" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>18. Wenn ich mich unterhalte, können mich andere kaum unterbrechen.</legend>
+        <label><input type="radio" name="q17" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q17" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q17" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q17" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>19. Zahlen faszinieren mich.</legend>
+        <label><input type="radio" name="q18" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q18" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q18" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q18" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>20. Wenn ich eine Geschichte lese, fällt es mir schwer, mir die Absichten der Figuren auszumalen.</legend>
+        <label><input type="radio" name="q19" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q19" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q19" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q19" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>21. Mir macht es keinen besonderen Spaß, Romane zu lesen.</legend>
+        <label><input type="radio" name="q20" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q20" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q20" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q20" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>22. Mir fällt es schwer, neue Freunde kennenzulernen.</legend>
+        <label><input type="radio" name="q21" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q21" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q21" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q21" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>23. Mir fallen ständig Muster an Gegenständen auf.</legend>
+        <label><input type="radio" name="q22" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q22" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q22" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q22" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>24. Ich würde eher ins Theater als in ein Museum gehen.</legend>
+        <label><input type="radio" name="q23" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q23" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q23" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q23" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>25. Es macht mir nichts aus, wenn sich mein Tagesablauf verändert.</legend>
+        <label><input type="radio" name="q24" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q24" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q24" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q24" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>26. Ich stelle oft fest, dass ich nicht weiß, wie ich ein Gespräch aufrechterhalten kann.</legend>
+        <label><input type="radio" name="q25" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q25" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q25" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q25" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>27. Es fällt mir leicht, Zwischentöne zu verstehen, wenn sich jemand mit mir unterhält.</legend>
+        <label><input type="radio" name="q26" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q26" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q26" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q26" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>28. Normalerweise konzentriere ich mich mehr auf das Gesamtbild als auf Details.</legend>
+        <label><input type="radio" name="q27" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q27" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q27" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q27" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>29. Ich kann mir Telefonnummern schlecht merken.</legend>
+        <label><input type="radio" name="q28" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q28" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q28" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q28" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>30. Kleine Veränderungen an einer Situation oder Person fallen mir kaum auf.</legend>
+        <label><input type="radio" name="q29" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q29" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q29" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q29" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>31. Wenn ich mit jemandem rede, merke ich, wenn es ihm langweilig wird.</legend>
+        <label><input type="radio" name="q30" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q30" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q30" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q30" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>32. Mir fällt es leicht, mehrere Sachen gleichzeitig zu machen.</legend>
+        <label><input type="radio" name="q31" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q31" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q31" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q31" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>33. Wenn ich mit jemandem spreche, weiß ich nicht genau, wann ich an der Reihe bin.</legend>
+        <label><input type="radio" name="q32" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q32" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q32" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q32" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>34. Ich bin gerne spontan.</legend>
+        <label><input type="radio" name="q33" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q33" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q33" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q33" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>35. Ich verstehe Pointen bei einem Witz oft als letzte*r.</legend>
+        <label><input type="radio" name="q34" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q34" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q34" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q34" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>36. Mir fällt es leicht herauszufinden, was jemand denkt, wenn ich nur auf das Gesicht schaue.</legend>
+        <label><input type="radio" name="q35" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q35" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q35" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q35" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>37. Wenn ich unterbrochen worden bin, kann ich schnell mit meiner vorherigen Tätigkeit weitermachen.</legend>
+        <label><input type="radio" name="q36" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q36" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q36" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q36" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>38. Mir macht es Spaß, mich mit Leuten zu unterhalten.</legend>
+        <label><input type="radio" name="q37" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q37" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q37" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q37" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>39. Oft wird mir erzählt, dass ich ständig über dieselben Dinge spreche.</legend>
+        <label><input type="radio" name="q38" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q38" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q38" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q38" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>40. Als ich klein war, habe ich gerne Rollenspiele mit anderen Kindern gespielt.</legend>
+        <label><input type="radio" name="q39" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q39" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q39" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q39" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>41. Ich sammele gerne Informationen zu Kategorien einer Sache, z. B. Autotypen oder Pflanzenarten.</legend>
+        <label><input type="radio" name="q40" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q40" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q40" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q40" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>42. Mir fällt es schwer, mich in andere Personen hineinzuversetzen.</legend>
+        <label><input type="radio" name="q41" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q41" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q41" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q41" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>43. Ich plane Sachen, die ich unternehmen will, immer sehr gründlich.</legend>
+        <label><input type="radio" name="q42" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q42" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q42" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q42" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>44. Ich genieße soziale Ereignisse.</legend>
+        <label><input type="radio" name="q43" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q43" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q43" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q43" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>45. Mir fällt es schwer zu erkennen, was andere Menschen vorhaben.</legend>
+        <label><input type="radio" name="q44" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q44" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q44" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q44" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>46. Unbekannte Situationen ängstigen mich.</legend>
+        <label><input type="radio" name="q45" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q45" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q45" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q45" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>47. Ich lerne gerne neue Leute kennen.</legend>
+        <label><input type="radio" name="q46" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q46" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q46" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q46" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>48. Ich bin sehr diplomatisch.</legend>
+        <label><input type="radio" name="q47" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q47" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q47" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q47" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>49. Ich erinnere mich schlecht an Geburtstage.</legend>
+        <label><input type="radio" name="q48" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q48" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q48" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q48" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
+    <div class="question">
+      <fieldset>
+        <legend>50. Mir fällt es leicht, Rollenspiele mit Kindern zu spielen.</legend>
+        <label><input type="radio" name="q49" value="0"> Ich stimme eindeutig zu</label><br/>
+        <label><input type="radio" name="q49" value="1"> Ich stimme ein wenig zu</label><br/>
+        <label><input type="radio" name="q49" value="2"> Ich stimme eher nicht zu</label><br/>
+        <label><input type="radio" name="q49" value="3"> Ich stimme überhaupt nicht zu</label>
+      </fieldset>
+    </div>
+    
   </form>
   <div class="navigation">
-    <button type="button" id="prevBtn">Zurück</button>
-    <button type="button" id="nextBtn">Weiter</button>
-    <button type="button" id="showResultBtn" style="display:none;">Ergebnis anzeigen</button>
+    <button onclick="calculateResult()">Ergebnis anzeigen</button>
   </div>
-  <div id="result" style="font-weight:bold; margin-top:30px; text-align:center; font-size:18px;"></div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <div id="result"></div>
   <script>
-    let currentPage = 0;
-    const pages = document.querySelectorAll(".question-page");
-    const totalPages = pages.length;
-
-    function showPage(index) {
-      pages.forEach((p, i) => p.classList.toggle("active", i === index));
-      document.getElementById("prevBtn").style.display = index === 0 ? "none" : "inline-block";
-      document.getElementById("nextBtn").style.display = index === totalPages - 1 ? "none" : "inline-block";
-      document.getElementById("showResultBtn").style.display = index === totalPages - 1 ? "inline-block" : "none";
-    }
-
-    document.getElementById("nextBtn").addEventListener("click", () => {
-      if (currentPage < totalPages - 1) currentPage++;
-      showPage(currentPage);
-    });
-
-    document.getElementById("prevBtn").addEventListener("click", () => {
-      if (currentPage > 0) currentPage--;
-      showPage(currentPage);
-    });
-
-    document.getElementById("showResultBtn").addEventListener("click", () => {
-      const formData = new FormData(document.getElementById("aqForm"));
+    function calculateResult() {
+      const form = document.getElementById('aqForm');
+      const formData = new FormData(form);
       let score = 0;
-      for (let i = 0; i < 2; i++) {
+      for (let i = 0; i < 50; i++) {
         const val = formData.get("q" + i);
         if (val === "0" || val === "3") score++;
       }
-      document.getElementById("result").innerText = "Gesamtpunktzahl: " + score + " / 2";
-    });
-
-    window.onload = () => {
-      showPage(0);
-    };
+      let interpretation = "";
+      if (score <= 16) {
+        interpretation = "Sehr geringe Anzahl autistischer Merkmale.";
+      } else if (score <= 25) {
+        interpretation = "Normbereich – leichte Ausprägungen.";
+      } else if (score <= 31) {
+        interpretation = "Hinweise auf stärkere autistische Tendenzen.";
+      } else {
+        interpretation = "Deutlicher Hinweis auf Autismus-Spektrum – ärztliche Abklärung empfohlen.";
+      }
+      document.getElementById("result").innerText = "Gesamtpunktzahl: " + score + " / 50\n" + interpretation;
+    }
   </script>
 </body>
 </html>
