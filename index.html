@@ -242,6 +242,7 @@ button {
     }
 
     async function generatePDF() {
+      calculateEQScore(new Event("submit"));
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       const formData = new FormData(form);
