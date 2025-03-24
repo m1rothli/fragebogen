@@ -127,101 +127,99 @@ button {
   <div id="result"></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script>
-    const questions = [
-"Ich erkenne leicht, ob jemand an einem Gespräch interessiert ist.",
-"Ich mag Tiere lieber als Menschen.",
-"Ich bemühe mich, mit den aktuellen Trends und Moden mitzugehen.",
-"Ich finde es schwierig, anderen Dinge zu erklären, die mir leicht fallen, wenn sie es nicht auf Anhieb verstehen.",
-"Nachts träume ich meistens.",
-"Es macht mir große Freude, mich um andere Leute zu kümmern.",
-"Ich versuche lieber, meine Probleme allein zu lösen, anstatt sie mit anderen zu besprechen.",
-"Ich finde es schwierig zu erkennen, was ich in einer sozialen Situation tun soll.",
-"Morgens bin ich in Bestform.",
-"Ich bekomme oft gesagt, dass ich zu weit gegangen bin, um mich in einer Diskussion durchzusetzen.",
-"Es stört mich nicht besonders, wenn ich zu einem Treffen mit Freunden zu spät komme.",
-"Freundschaften und Beziehungen sind einfach zu kompliziert, deshalb belaste ich mich lieber nicht damit.",
-"Ich würde nie gegen ein Gesetz verstoßen, egal wie geringfügig.",
-"Ich finde es oft schwierig zu beurteilen, ob etwas höflich oder unhöflich ist.",
-"In einer Unterhaltung neige ich dazu, mich eher auf meine eigenen Gedanken zu konzentrieren, als darauf, was mein Zuhörer denken könnte.",
-"Ich ziehe praktische Scherze erzählten Witzen vor.",
-"Ich lebe eher für das Heute als für die Zukunft.",
-"Als ich ein Kind war, zerteilte ich gern Würmer, um zu sehen, was passieren würde.",
-"Ich bemerke leicht, wenn jemand etwas anderes sagt, als er meint.",
-"Ich habe strenge Vorstellungen von Moral.",
-"Es fällt mir schwer zu verstehen, warum manche Dinge Leute so sehr aufregen.",
-"Ich finde es leicht, mich in jemand anderen hineinzuversetzen.",
-"Ich glaube, dass gute Manieren das Wichtigste sind, was Eltern ihrem Kind beibringen können.",
-"Ich tue Dinge gern spontan.",
-"Ich kann gut vorhersehen, wie sich jemand fühlen wird.",
-"Ich bemerke schnell, wenn sich jemand in einer Gruppe unwohl oder unbehaglich fühlt.",
-"Wenn ich etwas sage, das jemand anderen verletzt, dann glaube ich, dass es dessen Problem ist, und nicht meins.",
-"Wenn mich jemand fragt, was ich von seiner Frisur halte, antworte ich wahrheitsgemäß, auch wenn sie mir nicht gefällt.",
-"Ich kann nicht immer verstehen, warum sich jemand durch eine Bemerkung verletzt gefühlt haben sollte.",
-"Leute sagen mir oft, ich sei sehr unberechenbar.",
-"Bei sozialen Anlässen stehe ich allgemein gern im Mittelpunkt.",
-"Leute weinen zu sehen, macht mir nicht wirklich etwas aus.",
-"Ich unterhalte mich gern über Politik.",
-"Ich bin sehr direkt, was manche Leute für unhöflich halten, auch wenn es keine böse Absicht ist.",
-"Im Allgemeinen finde ich soziale Situationen nicht verwirrend.",
-"Andere sagen mir, ich sei gut darin zu verstehen, wie sie fühlen und was sie denken.",
-"Wenn ich mich mit anderen unterhalte, rede ich eher über deren Erfahrungen als über meine.",
-"Es regt mich auf zu sehen, wenn ein Tier Schmerzen hat.",
-"Ich kann Entscheidungen treffen, ohne mich von den Gefühlen anderer beeinflussen zu lassen.",
-"Ich kann mich nicht entspannen, solange ich nicht alles geschafft habe, was ich für den Tag geplant habe.",
-"Ich erkenne leicht, ob jemand sich für das, was ich sage, interessiert, oder davon gelangweilt ist.",
-"Es regt mich auf, wenn ich in Nachrichtensendungen Leute leiden sehe.",
-"Freunde erzählen mir gewöhnlich von ihren Problemen, weil sie sagen, ich sei sehr verständnisvoll.",
-"Ich bemerke, wenn ich störe, auch wenn die andere Person es nicht sagt.",
-"Ich beginne oft neue Hobbies, bin aber schnell davon gelangweilt und suche mir etwas anderes.",
-"Manchmal sagen mir Leute, ich sei beim Necken zu weit gegangen.",
-"Ich wäre zu ängstlich, um auf einer großen Achterbahn zu fahren.",
-"Andere sagen häufig, ich sei unsensibel, auch wenn ich nicht immer verstehe, warum.",
-"Ich finde, wer neu in eine Gruppe kommt, muss sich selbst um Kontakt bemühen.",
-"Wenn ich einen Film ansehe, bleibe ich in der Regel davon emotional unberührt.",
-"Im Alltag ziehe ich es vor, gut organisiert zu sein und mache mir oft Pläne, was zu tun ist.",
-"Ich kann mich schnell und intuitiv darauf einstellen, wie es jemandem geht.",
-"Ich gehe nicht gern Risiken ein.",
-"Ich kann leicht herausfinden, worüber jemand anderes vielleicht gern sprechen würde.",
-"Ich bemerke, ob jemand seine wahren Gefühle verbirgt.",
-"Bevor ich eine Entscheidung treffe, wäge ich immer die Vor- und Nachteile ab.",
-"Ich erarbeite mir nicht bewusst die Regeln des sozialen Zusammenlebens.",
-"Ich kann gut vorhersehen, was jemand tun wird.",
-"Ich neige dazu, von Problemen meiner Freunde emotional betroffen zu sein.",
-"Ich kann im Allgemeinen die Meinung einer anderen Person anerkennen, auch wenn ich anderer Meinung bin."
-];
-    const posQ = [1, 6, 19, 22, 25, 26, 35, 36, 37, 38, 41, 42, 43, 44, 52, 54, 55, 57, 58, 59, 60];
-    const negQ = [4, 8, 10, 11, 12, 14, 15, 18, 21, 27, 28, 29, 32, 34, 39, 46, 48, 49, 50];
-    const options = ["Stimme voll und ganz zu", "Stimme eher zu", "Stimme eher nicht zu", "Stimme überhaupt nicht zu"];
+  
+<script>
+  const questionsPerPage = 5;
+  let currentPage = 0;
 
-    const form = document.getElementById("eqForm");
+  const questions = [/*... wie gehabt ...*/];
+  const posQ = [1, 6, 19, 22, 25, 26, 35, 36, 37, 38, 41, 42, 43, 44, 52, 54, 55, 57, 58, 59, 60];
+  const negQ = [4, 8, 10, 11, 12, 14, 15, 18, 21, 27, 28, 29, 32, 34, 39, 46, 48, 49, 50];
+  const options = ["Stimme voll und ganz zu", "Stimme eher zu", "Stimme eher nicht zu", "Stimme überhaupt nicht zu"];
 
-    questions.forEach((question, index) => {
+  const questionsData = [...questions]; // Fragen werden unten ersetzt
+
+  const form = document.getElementById("eqForm");
+
+  function renderQuestions() {
+    form.innerHTML = '';
+    const start = currentPage * questionsPerPage;
+    const end = Math.min(start + questionsPerPage, questionsData.length);
+
+    for (let i = start; i < end; i++) {
       const div = document.createElement("div");
       div.className = "question";
-      div.innerHTML = `<p>${index + 1}. ${question}</p>`;
+      div.innerHTML = `<p>${i + 1}. ${questionsData[i]}</p>`;
       const optionsDiv = document.createElement("div");
       optionsDiv.className = "options";
-      options.forEach((option, i) => {
+      options.forEach((option, j) => {
         optionsDiv.innerHTML += `
           <label>
-            <input type="radio" name="q${index}" value="${i}" required> ${option}
+            <input type="radio" name="q${i}" value="${j}"> ${option}
           </label>`;
       });
       div.appendChild(optionsDiv);
       form.appendChild(div);
-    });
+    }
 
-    let latestResult = "";
+    renderNavigation();
+  }
 
-    function calculateEQScore(event) {
-      event.preventDefault();
-      const formData = new FormData(form);
-      let score = 0;
+  function renderNavigation() {
+    let nav = document.createElement("div");
+    nav.style.textAlign = "center";
 
-      for (let i = 0; i < questions.length; i++) {
-        const val = parseInt(formData.get(`q${i}`));
-        const qNum = i + 1;
+    if (currentPage > 0) {
+      let prev = document.createElement("button");
+      prev.textContent = "Zurück";
+      prev.type = "button";
+      prev.onclick = () => {
+        currentPage--;
+        renderQuestions();
+      };
+      nav.appendChild(prev);
+    }
+
+    if ((currentPage + 1) * questionsPerPage < questionsData.length) {
+      let next = document.createElement("button");
+      next.textContent = "Weiter";
+      next.type = "button";
+      next.style.marginLeft = "20px";
+      next.onclick = () => {
+        currentPage++;
+        renderQuestions();
+      };
+      nav.appendChild(next);
+    } else {
+      let finish = document.createElement("button");
+      finish.textContent = "Ergebnis anzeigen";
+      finish.type = "button";
+      finish.onclick = calculateEQScore;
+      finish.style.marginLeft = "20px";
+      nav.appendChild(finish);
+
+      let pdf = document.createElement("button");
+      pdf.textContent = "Antworten & Ergebnis als PDF";
+      pdf.type = "button";
+      pdf.onclick = generatePDF;
+      pdf.style.marginLeft = "20px";
+      nav.appendChild(pdf);
+    }
+
+    form.appendChild(nav);
+  }
+
+  let latestResult = "";
+
+  function calculateEQScore(event) {
+    event?.preventDefault();
+    const formData = new FormData(document.getElementById("eqForm"));
+    let score = 0;
+
+    for (let i = 0; i < questionsData.length; i++) {
+      const val = parseInt(document.querySelector(`input[name="q${i}"]:checked`)?.value);
+      const qNum = i + 1;
+      if (!isNaN(val)) {
         if (posQ.includes(qNum)) {
           if (val === 0) score += 2;
           else if (val === 1) score += 1;
@@ -230,56 +228,62 @@ button {
           else if (val === 2) score += 1;
         }
       }
-
-      let interpretation = "";
-      if (score <= 32) interpretation = "Hinweis auf unterdurchschnittliches Einfühlungsvermögen.";
-      else if (score <= 52) interpretation = "Durchschnittliches Einfühlungsvermögen.";
-      else if (score <= 63) interpretation = "Überdurchschnittliches Einfühlungsvermögen.";
-      else interpretation = "Sehr hohes Einfühlungsvermögen.";
-
-      latestResult = `Gesamtpunktzahl: ${score} / 80\n${interpretation}`;
-      document.getElementById("result").innerText = latestResult;
     }
 
-    async function generatePDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-      const formData = new FormData(form);
+    let interpretation = "";
+    if (score <= 32) interpretation = "Hinweis auf unterdurchschnittliches Einfühlungsvermögen.";
+    else if (score <= 52) interpretation = "Durchschnittliches Einfühlungsvermögen.";
+    else if (score <= 63) interpretation = "Überdurchschnittliches Einfühlungsvermögen.";
+    else interpretation = "Sehr hohes Einfühlungsvermögen.";
 
-      doc.setFontSize(14);
-      doc.text("EQ-Fragebogen – Antworten (23.03.2025)", 10, 10);
-      let y = 20;
+    latestResult = `Gesamtpunktzahl: ${score} / 80
+${interpretation}`;
+    document.getElementById("result").innerText = latestResult;
+  }
 
-      for (let i = 0; i < questions.length; i++) {
-        const val = formData.get(`q${i}`);
-        const label = val !== null ? options[parseInt(val)] : "(keine Antwort)";
-        const qText = `${i + 1}. ${questions[i]}`;
-        const aText = `Antwort: ${label}`;
+  async function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(14);
+    doc.text("EQ-Fragebogen – Antworten (23.03.2025)", 10, 10);
+    let y = 20;
 
-        const qLines = doc.splitTextToSize(qText, 180);
-        const aLines = doc.splitTextToSize(aText, 180);
+    for (let i = 0; i < questionsData.length; i++) {
+      const input = document.querySelector(`input[name="q${i}"]:checked`);
+      const val = input?.value;
+      const label = val !== undefined ? options[parseInt(val)] : "(keine Antwort)";
+      const qText = `${i + 1}. ${questionsData[i]}`;
+      const aText = `Antwort: ${label}`;
 
-        if (y + (qLines.length + aLines.length) * 7 > 280) {
-          doc.addPage();
-          y = 10;
-        }
+      const qLines = doc.splitTextToSize(qText, 180);
+      const aLines = doc.splitTextToSize(aText, 180);
 
-        doc.text(qLines, 10, y);
-        y += qLines.length * 7;
-        doc.text(aLines, 10, y);
-        y += aLines.length * 7 + 5;
-      }
-
-      const resultLines = doc.splitTextToSize("Ergebnis:\n" + latestResult, 180);
-      if (y + resultLines.length * 7 > 280) {
+      if (y + (qLines.length + aLines.length) * 7 > 280) {
         doc.addPage();
         y = 10;
       }
-      doc.setFont(undefined, "bold");
-      doc.text(resultLines, 10, y);
 
-      doc.save("EQ_Fragebogen_Ergebnis.pdf");
+      doc.text(qLines, 10, y);
+      y += qLines.length * 7;
+      doc.text(aLines, 10, y);
+      y += aLines.length * 7 + 5;
     }
-  </script>
+
+    const resultLines = doc.splitTextToSize("Ergebnis:
+" + latestResult, 180);
+    if (y + resultLines.length * 7 > 280) {
+      doc.addPage();
+      y = 10;
+    }
+    doc.setFont(undefined, "bold");
+    doc.text(resultLines, 10, y);
+    doc.save("EQ_Fragebogen_Ergebnis.pdf");
+  }
+
+  const questionsData = ['"Ich erkenne leicht, ob jemand an einem Gespräch interessiert ist.', 'Ich mag Tiere lieber als Menschen.', 'Ich bemühe mich, mit den aktuellen Trends und Moden mitzugehen.', 'Ich finde es schwierig, anderen Dinge zu erklären, die mir leicht fallen, wenn sie es nicht auf Anhieb verstehen.', 'Nachts träume ich meistens.', 'Es macht mir große Freude, mich um andere Leute zu kümmern.', 'Ich versuche lieber, meine Probleme allein zu lösen, anstatt sie mit anderen zu besprechen.', 'Ich finde es schwierig zu erkennen, was ich in einer sozialen Situation tun soll.', 'Morgens bin ich in Bestform.', 'Ich bekomme oft gesagt, dass ich zu weit gegangen bin, um mich in einer Diskussion durchzusetzen.', 'Es stört mich nicht besonders, wenn ich zu einem Treffen mit Freunden zu spät komme.', 'Freundschaften und Beziehungen sind einfach zu kompliziert, deshalb belaste ich mich lieber nicht damit.', 'Ich würde nie gegen ein Gesetz verstoßen, egal wie geringfügig.', 'Ich finde es oft schwierig zu beurteilen, ob etwas höflich oder unhöflich ist.', 'In einer Unterhaltung neige ich dazu, mich eher auf meine eigenen Gedanken zu konzentrieren, als darauf, was mein Zuhörer denken könnte.', 'Ich ziehe praktische Scherze erzählten Witzen vor.', 'Ich lebe eher für das Heute als für die Zukunft.', 'Als ich ein Kind war, zerteilte ich gern Würmer, um zu sehen, was passieren würde.', 'Ich bemerke leicht, wenn jemand etwas anderes sagt, als er meint.', 'Ich habe strenge Vorstellungen von Moral.', 'Es fällt mir schwer zu verstehen, warum manche Dinge Leute so sehr aufregen.', 'Ich finde es leicht, mich in jemand anderen hineinzuversetzen.', 'Ich glaube, dass gute Manieren das Wichtigste sind, was Eltern ihrem Kind beibringen können.', 'Ich tue Dinge gern spontan.', 'Ich kann gut vorhersehen, wie sich jemand fühlen wird.', 'Ich bemerke schnell, wenn sich jemand in einer Gruppe unwohl oder unbehaglich fühlt.', 'Wenn ich etwas sage, das jemand anderen verletzt, dann glaube ich, dass es dessen Problem ist, und nicht meins.', 'Wenn mich jemand fragt, was ich von seiner Frisur halte, antworte ich wahrheitsgemäß, auch wenn sie mir nicht gefällt.', 'Ich kann nicht immer verstehen, warum sich jemand durch eine Bemerkung verletzt gefühlt haben sollte.', 'Leute sagen mir oft, ich sei sehr unberechenbar.', 'Bei sozialen Anlässen stehe ich allgemein gern im Mittelpunkt.', 'Leute weinen zu sehen, macht mir nicht wirklich etwas aus.', 'Ich unterhalte mich gern über Politik.', 'Ich bin sehr direkt, was manche Leute für unhöflich halten, auch wenn es keine böse Absicht ist.', 'Im Allgemeinen finde ich soziale Situationen nicht verwirrend.', 'Andere sagen mir, ich sei gut darin zu verstehen, wie sie fühlen und was sie denken.', 'Wenn ich mich mit anderen unterhalte, rede ich eher über deren Erfahrungen als über meine.', 'Es regt mich auf zu sehen, wenn ein Tier Schmerzen hat.', 'Ich kann Entscheidungen treffen, ohne mich von den Gefühlen anderer beeinflussen zu lassen.', 'Ich kann mich nicht entspannen, solange ich nicht alles geschafft habe, was ich für den Tag geplant habe.', 'Ich erkenne leicht, ob jemand sich für das, was ich sage, interessiert, oder davon gelangweilt ist.', 'Es regt mich auf, wenn ich in Nachrichtensendungen Leute leiden sehe.', 'Freunde erzählen mir gewöhnlich von ihren Problemen, weil sie sagen, ich sei sehr verständnisvoll.', 'Ich bemerke, wenn ich störe, auch wenn die andere Person es nicht sagt.', 'Ich beginne oft neue Hobbies, bin aber schnell davon gelangweilt und suche mir etwas anderes.', 'Manchmal sagen mir Leute, ich sei beim Necken zu weit gegangen.', 'Ich wäre zu ängstlich, um auf einer großen Achterbahn zu fahren.', 'Andere sagen häufig, ich sei unsensibel, auch wenn ich nicht immer verstehe, warum.', 'Ich finde, wer neu in eine Gruppe kommt, muss sich selbst um Kontakt bemühen.', 'Wenn ich einen Film ansehe, bleibe ich in der Regel davon emotional unberührt.', 'Im Alltag ziehe ich es vor, gut organisiert zu sein und mache mir oft Pläne, was zu tun ist.', 'Ich kann mich schnell und intuitiv darauf einstellen, wie es jemandem geht.', 'Ich gehe nicht gern Risiken ein.', 'Ich kann leicht herausfinden, worüber jemand anderes vielleicht gern sprechen würde.', 'Ich bemerke, ob jemand seine wahren Gefühle verbirgt.', 'Bevor ich eine Entscheidung treffe, wäge ich immer die Vor- und Nachteile ab.', 'Ich erarbeite mir nicht bewusst die Regeln des sozialen Zusammenlebens.', 'Ich kann gut vorhersehen, was jemand tun wird.', 'Ich neige dazu, von Problemen meiner Freunde emotional betroffen zu sein.', 'Ich kann im Allgemeinen die Meinung einer anderen Person anerkennen, auch wenn ich anderer Meinung bin."'];
+
+  renderQuestions();
+</script>
+
 </body>
 </html>
