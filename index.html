@@ -1,444 +1,509 @@
 
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <title>MBAS Online-Fragebogen</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background: #f9f9f9;
-        }
-        h1 {
-            text-align: center;
-        }
-        form {
-            max-width: 900px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .question {
-            margin-bottom: 20px;
-        }
-        label {
-            margin-right: 15px;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Marburger Beurteilungsskala zum Asperger-Syndrom (MBAS)</h1>
-    <button type="button" onclick="zufallsausfüllen()">Fragebogen zufällig ausfüllen</button><br><br>
-<form id="mbas-form">
-        <div class="question"><label><strong>Name der Person, die den Fragebogen ausfüllt</strong><br><input type="text" name="Name der Person, die den Fragebogen ausfüllt" style="width: 100%;"></label></div>
-<div class="question"><label><strong>Beziehung zur beurteilten Person</strong><br><input type="text" name="Beziehung zur beurteilten Person" style="width: 100%;"></label></div>
-<div class="question"><label><strong>Name des Kindes/Jugendlichen</strong><br><input type="text" name="Name des Kindes/Jugendlichen" style="width: 100%;"></label></div>
-<div class="question"><label><strong>Heutiges Datum</strong><br><input type="date" name="Heutiges Datum"></label></div>
-<div class="question"><label><strong>Geburtsdatum des Kindes/Jugendlichen</strong><br><input type="date" name="Geburtsdatum des Kindes/Jugendlichen"></label></div>
-<div class="question"><label><strong>Lebensalter des Kindes/Jugendlichen</strong><br><input type="text" name="Lebensalter des Kindes/Jugendlichen" style="width: 100%;"></label></div>
+<meta charset="utf-8"/>
+<title>MBAS Online-Fragebogen</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script><script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script><script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script><style>
+@media screen and (max-width: 1024px) {
+    body, form {
+        font-size: 1em;
+    }
+    label {
+        display: block;
+        padding: 6px 0;
+    }
+    .question {
+        margin-bottom: 12px;
+    }
+    button {
+        padding: 10px 18px;
+        font-size: 1em;
+        width: 100%%;
+        margin-bottom: 10px;
+    }
+    input[type="radio"] {
+        width: 1.2em;
+        height: 1.2em;
+        margin-right: 8px;
+    }
+    input[type="text"], input[type="date"] {
+        width: 100%%;
+        padding: 8px;
+        font-size: 1em;
+        box-sizing: border-box;
+    }
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+</style><style>
+body, form {
+    font-size: 1.05em;
+    line-height: 1.5;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #fafafa;
+    color: #333;
+    padding: 20px;
+}
+h1, h2, h3 {
+    font-size: 1.4em;
+    color: #2c3e50;
+    margin: 16px 0 10px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4px;
+}
+.question {
+    background: #fff;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+label {
+    display: block;
+    padding: 6px 0;
+    font-size: 1em;
+}
+button {
+    padding: 12px 18px;
+    font-size: 1em;
+    border-radius: 6px;
+    border: none;
+    background-color: #3498db;
+    color: white;
+    margin-top: 10px;
+    width: 100%;
+}
+button:hover {
+    background-color: #2980b9;
+}
+input[type="radio"] {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 8px;
+}
+input[type="text"], input[type="date"] {
+    font-size: 1em;
+    padding: 8px;
+    width: 100%;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+fieldset {
+    border: none;
+    margin-bottom: 20px;
+}
+</style></head>
+<body><button onclick="exportPageAsPDF()" type="button">Gesamte Seite als PDF speichern</button>
+<h1>Marburger Beurteilungsskala zum Asperger-Syndrom (MBAS)</h1>
+<br/><br/>
+<br/><br/><form id="mbas-form">
+<div class="question"><label><strong>Name der Person, die den Fragebogen ausfüllt</strong><br/><input name="Name der Person, die den Fragebogen ausfüllt" style="width: 100%;" type="text"/></label></div>
+<div class="question"><label><strong>Beziehung zur beurteilten Person</strong><br/><input name="Beziehung zur beurteilten Person" style="width: 100%;" type="text"/></label></div>
+<div class="question"><label><strong>Name des Kindes/Jugendlichen</strong><br/><input name="Name des Kindes/Jugendlichen" style="width: 100%;" type="text"/></label></div>
+<div class="question"><label><strong>Heutiges Datum</strong><br/><input name="Heutiges Datum" type="date"/></label></div>
+<div class="question"><label><strong>Geburtsdatum des Kindes/Jugendlichen</strong><br/><input name="Geburtsdatum des Kindes/Jugendlichen" type="date"/></label></div>
+<div class="question"><label><strong>Lebensalter des Kindes/Jugendlichen</strong><br/><input name="Lebensalter des Kindes/Jugendlichen" style="width: 100%;" type="text"/></label></div>
 <div class="question"><p><strong>1. Zeigt er Interesse an anderen Kindern/Menschen?</strong></p>
-<label><input type="radio" name="q1" value="0"> niemals</label>
-<label><input type="radio" name="q1" value="1"> selten</label>
-<label><input type="radio" name="q1" value="2"> manchmal</label>
-<label><input type="radio" name="q1" value="3"> häufig</label>
-<label><input type="radio" name="q1" value="4"> immer</label>
+<label><input name="q1" type="radio" value="0"/> niemals</label>
+<label><input name="q1" type="radio" value="1"/> selten</label>
+<label><input name="q1" type="radio" value="2"/> manchmal</label>
+<label><input name="q1" type="radio" value="3"/> häufig</label>
+<label><input name="q1" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>2. Hat er Freunde?</strong></p>
-<label><input type="radio" name="q2" value="0"> niemals</label>
-<label><input type="radio" name="q2" value="1"> selten</label>
-<label><input type="radio" name="q2" value="2"> manchmal</label>
-<label><input type="radio" name="q2" value="3"> häufig</label>
-<label><input type="radio" name="q2" value="4"> immer</label>
+<label><input name="q2" type="radio" value="0"/> niemals</label>
+<label><input name="q2" type="radio" value="1"/> selten</label>
+<label><input name="q2" type="radio" value="2"/> manchmal</label>
+<label><input name="q2" type="radio" value="3"/> häufig</label>
+<label><input name="q2" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>3. Hat er irgendwelche besonderen Freunde, oder einen besten Freund?</strong></p>
-<label><input type="radio" name="q3" value="0"> niemals</label>
-<label><input type="radio" name="q3" value="1"> selten</label>
-<label><input type="radio" name="q3" value="2"> manchmal</label>
-<label><input type="radio" name="q3" value="3"> häufig</label>
-<label><input type="radio" name="q3" value="4"> immer</label>
+<label><input name="q3" type="radio" value="0"/> niemals</label>
+<label><input name="q3" type="radio" value="1"/> selten</label>
+<label><input name="q3" type="radio" value="2"/> manchmal</label>
+<label><input name="q3" type="radio" value="3"/> häufig</label>
+<label><input name="q3" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>4. Zeigt er Interesse an dem, was andere sagen oder interessant finden?</strong></p>
-<label><input type="radio" name="q4" value="0"> niemals</label>
-<label><input type="radio" name="q4" value="1"> selten</label>
-<label><input type="radio" name="q4" value="2"> manchmal</label>
-<label><input type="radio" name="q4" value="3"> häufig</label>
-<label><input type="radio" name="q4" value="4"> immer</label>
+<label><input name="q4" type="radio" value="0"/> niemals</label>
+<label><input name="q4" type="radio" value="1"/> selten</label>
+<label><input name="q4" type="radio" value="2"/> manchmal</label>
+<label><input name="q4" type="radio" value="3"/> häufig</label>
+<label><input name="q4" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>5. Versucht er Sie zu trösten, wenn Sie traurig oder verletzt sind?</strong></p>
-<label><input type="radio" name="q5" value="0"> niemals</label>
-<label><input type="radio" name="q5" value="1"> selten</label>
-<label><input type="radio" name="q5" value="2"> manchmal</label>
-<label><input type="radio" name="q5" value="3"> häufig</label>
-<label><input type="radio" name="q5" value="4"> immer</label>
+<label><input name="q5" type="radio" value="0"/> niemals</label>
+<label><input name="q5" type="radio" value="1"/> selten</label>
+<label><input name="q5" type="radio" value="2"/> manchmal</label>
+<label><input name="q5" type="radio" value="3"/> häufig</label>
+<label><input name="q5" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>6. Haben Sie den Eindruck, dass er mitbekommt, was andere Menschen denken, beabsichtigen oder sich vorstellen?</strong></p>
-<label><input type="radio" name="q6" value="0"> niemals</label>
-<label><input type="radio" name="q6" value="1"> selten</label>
-<label><input type="radio" name="q6" value="2"> manchmal</label>
-<label><input type="radio" name="q6" value="3"> häufig</label>
-<label><input type="radio" name="q6" value="4"> immer</label>
+<label><input name="q6" type="radio" value="0"/> niemals</label>
+<label><input name="q6" type="radio" value="1"/> selten</label>
+<label><input name="q6" type="radio" value="2"/> manchmal</label>
+<label><input name="q6" type="radio" value="3"/> häufig</label>
+<label><input name="q6" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>7. Hat er Schwierigkeiten, die Gefühle anderer zu verstehen?</strong></p>
-<label><input type="radio" name="q7" value="0"> niemals</label>
-<label><input type="radio" name="q7" value="1"> selten</label>
-<label><input type="radio" name="q7" value="2"> manchmal</label>
-<label><input type="radio" name="q7" value="3"> häufig</label>
-<label><input type="radio" name="q7" value="4"> immer</label>
+<label><input name="q7" type="radio" value="0"/> niemals</label>
+<label><input name="q7" type="radio" value="1"/> selten</label>
+<label><input name="q7" type="radio" value="2"/> manchmal</label>
+<label><input name="q7" type="radio" value="3"/> häufig</label>
+<label><input name="q7" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>8. Nimmt er die Bedürfnisse von anderen nicht wahr und/ oder ist diesen gegenüber unempfindlich?</strong></p>
-<label><input type="radio" name="q8" value="0"> niemals</label>
-<label><input type="radio" name="q8" value="1"> selten</label>
-<label><input type="radio" name="q8" value="2"> manchmal</label>
-<label><input type="radio" name="q8" value="3"> häufig</label>
-<label><input type="radio" name="q8" value="4"> immer</label>
+<label><input name="q8" type="radio" value="0"/> niemals</label>
+<label><input name="q8" type="radio" value="1"/> selten</label>
+<label><input name="q8" type="radio" value="2"/> manchmal</label>
+<label><input name="q8" type="radio" value="3"/> häufig</label>
+<label><input name="q8" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>9. Schaut er seinen Gesprächspartnern direkt ins Gesicht?</strong></p>
-<label><input type="radio" name="q9" value="0"> niemals</label>
-<label><input type="radio" name="q9" value="1"> selten</label>
-<label><input type="radio" name="q9" value="2"> manchmal</label>
-<label><input type="radio" name="q9" value="3"> häufig</label>
-<label><input type="radio" name="q9" value="4"> immer</label>
+<label><input name="q9" type="radio" value="0"/> niemals</label>
+<label><input name="q9" type="radio" value="1"/> selten</label>
+<label><input name="q9" type="radio" value="2"/> manchmal</label>
+<label><input name="q9" type="radio" value="3"/> häufig</label>
+<label><input name="q9" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>10. Kann er beispielsweise Freude, Trauer, Wut, Furcht mimisch ausdrücken?</strong></p>
-<label><input type="radio" name="q10" value="0"> niemals</label>
-<label><input type="radio" name="q10" value="1"> selten</label>
-<label><input type="radio" name="q10" value="2"> manchmal</label>
-<label><input type="radio" name="q10" value="3"> häufig</label>
-<label><input type="radio" name="q10" value="4"> immer</label>
+<label><input name="q10" type="radio" value="0"/> niemals</label>
+<label><input name="q10" type="radio" value="1"/> selten</label>
+<label><input name="q10" type="radio" value="2"/> manchmal</label>
+<label><input name="q10" type="radio" value="3"/> häufig</label>
+<label><input name="q10" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>11. Erkennt man an seinem Gesichtsausdruck wie es ihm geht?</strong></p>
-<label><input type="radio" name="q11" value="0"> niemals</label>
-<label><input type="radio" name="q11" value="1"> selten</label>
-<label><input type="radio" name="q11" value="2"> manchmal</label>
-<label><input type="radio" name="q11" value="3"> häufig</label>
-<label><input type="radio" name="q11" value="4"> immer</label>
+<label><input name="q11" type="radio" value="0"/> niemals</label>
+<label><input name="q11" type="radio" value="1"/> selten</label>
+<label><input name="q11" type="radio" value="2"/> manchmal</label>
+<label><input name="q11" type="radio" value="3"/> häufig</label>
+<label><input name="q11" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>12. Verwendet er auffällig wenig Gestik, um seine verbalen Äußerungen zu unterstreichen?</strong></p>
-<label><input type="radio" name="q12" value="0"> niemals</label>
-<label><input type="radio" name="q12" value="1"> selten</label>
-<label><input type="radio" name="q12" value="2"> manchmal</label>
-<label><input type="radio" name="q12" value="3"> häufig</label>
-<label><input type="radio" name="q12" value="4"> immer</label>
+<label><input name="q12" type="radio" value="0"/> niemals</label>
+<label><input name="q12" type="radio" value="1"/> selten</label>
+<label><input name="q12" type="radio" value="2"/> manchmal</label>
+<label><input name="q12" type="radio" value="3"/> häufig</label>
+<label><input name="q12" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>13. Ist sein Gesichtsausdruck gewöhnlich passend zu der jeweiligen Situation?</strong></p>
-<label><input type="radio" name="q13" value="0"> niemals</label>
-<label><input type="radio" name="q13" value="1"> selten</label>
-<label><input type="radio" name="q13" value="2"> manchmal</label>
-<label><input type="radio" name="q13" value="3"> häufig</label>
-<label><input type="radio" name="q13" value="4"> immer</label>
+<label><input name="q13" type="radio" value="0"/> niemals</label>
+<label><input name="q13" type="radio" value="1"/> selten</label>
+<label><input name="q13" type="radio" value="2"/> manchmal</label>
+<label><input name="q13" type="radio" value="3"/> häufig</label>
+<label><input name="q13" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>14. Sind seine Gefühlsäußerungen der jeweiligen Situation angemessen?</strong></p>
-<label><input type="radio" name="q14" value="0"> niemals</label>
-<label><input type="radio" name="q14" value="1"> selten</label>
-<label><input type="radio" name="q14" value="2"> manchmal</label>
-<label><input type="radio" name="q14" value="3"> häufig</label>
-<label><input type="radio" name="q14" value="4"> immer</label>
+<label><input name="q14" type="radio" value="0"/> niemals</label>
+<label><input name="q14" type="radio" value="1"/> selten</label>
+<label><input name="q14" type="radio" value="2"/> manchmal</label>
+<label><input name="q14" type="radio" value="3"/> häufig</label>
+<label><input name="q14" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>15. Ist er daran interessiert, dass Sie an seiner Freude teilnehmen?</strong></p>
-<label><input type="radio" name="q15" value="0"> niemals</label>
-<label><input type="radio" name="q15" value="1"> selten</label>
-<label><input type="radio" name="q15" value="2"> manchmal</label>
-<label><input type="radio" name="q15" value="3"> häufig</label>
-<label><input type="radio" name="q15" value="4"> immer</label>
+<label><input name="q15" type="radio" value="0"/> niemals</label>
+<label><input name="q15" type="radio" value="1"/> selten</label>
+<label><input name="q15" type="radio" value="2"/> manchmal</label>
+<label><input name="q15" type="radio" value="3"/> häufig</label>
+<label><input name="q15" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>16. Erscheint er interessiert an den Kommentaren und Bemerkungen des Gesprächspartners?</strong></p>
-<label><input type="radio" name="q16" value="0"> niemals</label>
-<label><input type="radio" name="q16" value="1"> selten</label>
-<label><input type="radio" name="q16" value="2"> manchmal</label>
-<label><input type="radio" name="q16" value="3"> häufig</label>
-<label><input type="radio" name="q16" value="4"> immer</label>
+<label><input name="q16" type="radio" value="0"/> niemals</label>
+<label><input name="q16" type="radio" value="1"/> selten</label>
+<label><input name="q16" type="radio" value="2"/> manchmal</label>
+<label><input name="q16" type="radio" value="3"/> häufig</label>
+<label><input name="q16" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>17. Fragt er nach oder nimmt Stellung zu Gedanken oder Einstellungen des Gesprächspartners?</strong></p>
-<label><input type="radio" name="q17" value="0"> niemals</label>
-<label><input type="radio" name="q17" value="1"> selten</label>
-<label><input type="radio" name="q17" value="2"> manchmal</label>
-<label><input type="radio" name="q17" value="3"> häufig</label>
-<label><input type="radio" name="q17" value="4"> immer</label>
+<label><input name="q17" type="radio" value="0"/> niemals</label>
+<label><input name="q17" type="radio" value="1"/> selten</label>
+<label><input name="q17" type="radio" value="2"/> manchmal</label>
+<label><input name="q17" type="radio" value="3"/> häufig</label>
+<label><input name="q17" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>18. Ist seine Sprachmelodie sehr monoton, hat er eine sehr hohe Stimme oder ähnliches?</strong></p>
-<label><input type="radio" name="q18" value="0"> niemals</label>
-<label><input type="radio" name="q18" value="1"> selten</label>
-<label><input type="radio" name="q18" value="2"> manchmal</label>
-<label><input type="radio" name="q18" value="3"> häufig</label>
-<label><input type="radio" name="q18" value="4"> immer</label>
+<label><input name="q18" type="radio" value="0"/> niemals</label>
+<label><input name="q18" type="radio" value="1"/> selten</label>
+<label><input name="q18" type="radio" value="2"/> manchmal</label>
+<label><input name="q18" type="radio" value="3"/> häufig</label>
+<label><input name="q18" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>19. Ist seine Sprache übergenau oder pedantisch?</strong></p>
-<label><input type="radio" name="q19" value="0"> niemals</label>
-<label><input type="radio" name="q19" value="1"> selten</label>
-<label><input type="radio" name="q19" value="2"> manchmal</label>
-<label><input type="radio" name="q19" value="3"> häufig</label>
-<label><input type="radio" name="q19" value="4"> immer</label>
+<label><input name="q19" type="radio" value="0"/> niemals</label>
+<label><input name="q19" type="radio" value="1"/> selten</label>
+<label><input name="q19" type="radio" value="2"/> manchmal</label>
+<label><input name="q19" type="radio" value="3"/> häufig</label>
+<label><input name="q19" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>20. Spricht er förmlich oder wie ein wandelndes Wörterbuch?</strong></p>
-<label><input type="radio" name="q20" value="0"> niemals</label>
-<label><input type="radio" name="q20" value="1"> selten</label>
-<label><input type="radio" name="q20" value="2"> manchmal</label>
-<label><input type="radio" name="q20" value="3"> häufig</label>
-<label><input type="radio" name="q20" value="4"> immer</label>
+<label><input name="q20" type="radio" value="0"/> niemals</label>
+<label><input name="q20" type="radio" value="1"/> selten</label>
+<label><input name="q20" type="radio" value="2"/> manchmal</label>
+<label><input name="q20" type="radio" value="3"/> häufig</label>
+<label><input name="q20" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>21. Nimmt er alles sehr wörtlich?</strong></p>
-<label><input type="radio" name="q21" value="0"> niemals</label>
-<label><input type="radio" name="q21" value="1"> selten</label>
-<label><input type="radio" name="q21" value="2"> manchmal</label>
-<label><input type="radio" name="q21" value="3"> häufig</label>
-<label><input type="radio" name="q21" value="4"> immer</label>
+<label><input name="q21" type="radio" value="0"/> niemals</label>
+<label><input name="q21" type="radio" value="1"/> selten</label>
+<label><input name="q21" type="radio" value="2"/> manchmal</label>
+<label><input name="q21" type="radio" value="3"/> häufig</label>
+<label><input name="q21" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>22. Hat er Schwierigkeiten zu verstehen, wenn er verspottet oder gedemütigt wird oder wenn man sich über ihn lustig macht?</strong></p>
-<label><input type="radio" name="q22" value="0"> niemals</label>
-<label><input type="radio" name="q22" value="1"> selten</label>
-<label><input type="radio" name="q22" value="2"> manchmal</label>
-<label><input type="radio" name="q22" value="3"> häufig</label>
-<label><input type="radio" name="q22" value="4"> immer</label>
+<label><input name="q22" type="radio" value="0"/> niemals</label>
+<label><input name="q22" type="radio" value="1"/> selten</label>
+<label><input name="q22" type="radio" value="2"/> manchmal</label>
+<label><input name="q22" type="radio" value="3"/> häufig</label>
+<label><input name="q22" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>23. Hat er Schwierigkeiten, eine Konversation zu beginnen und weiterzuführen?</strong></p>
-<label><input type="radio" name="q23" value="0"> niemals</label>
-<label><input type="radio" name="q23" value="1"> selten</label>
-<label><input type="radio" name="q23" value="2"> manchmal</label>
-<label><input type="radio" name="q23" value="3"> häufig</label>
-<label><input type="radio" name="q23" value="4"> immer</label>
+<label><input name="q23" type="radio" value="0"/> niemals</label>
+<label><input name="q23" type="radio" value="1"/> selten</label>
+<label><input name="q23" type="radio" value="2"/> manchmal</label>
+<label><input name="q23" type="radio" value="3"/> häufig</label>
+<label><input name="q23" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>24. Stellt er häufig unangebrachte Fragen, die nicht zur aktuellen Situation passen?</strong></p>
-<label><input type="radio" name="q24" value="0"> niemals</label>
-<label><input type="radio" name="q24" value="1"> selten</label>
-<label><input type="radio" name="q24" value="2"> manchmal</label>
-<label><input type="radio" name="q24" value="3"> häufig</label>
-<label><input type="radio" name="q24" value="4"> immer</label>
+<label><input name="q24" type="radio" value="0"/> niemals</label>
+<label><input name="q24" type="radio" value="1"/> selten</label>
+<label><input name="q24" type="radio" value="2"/> manchmal</label>
+<label><input name="q24" type="radio" value="3"/> häufig</label>
+<label><input name="q24" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>25. Redet er exzessiv über Lieblingsthemen, die bei anderen Personen nur von begrenztem Interesse sind?</strong></p>
-<label><input type="radio" name="q25" value="0"> niemals</label>
-<label><input type="radio" name="q25" value="1"> selten</label>
-<label><input type="radio" name="q25" value="2"> manchmal</label>
-<label><input type="radio" name="q25" value="3"> häufig</label>
-<label><input type="radio" name="q25" value="4"> immer</label>
+<label><input name="q25" type="radio" value="0"/> niemals</label>
+<label><input name="q25" type="radio" value="1"/> selten</label>
+<label><input name="q25" type="radio" value="2"/> manchmal</label>
+<label><input name="q25" type="radio" value="3"/> häufig</label>
+<label><input name="q25" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>26. Macht er unangemessene Bemerkungen, ohne sich bewusst zu sein, dass diese verletzen könnten?</strong></p>
-<label><input type="radio" name="q26" value="0"> niemals</label>
-<label><input type="radio" name="q26" value="1"> selten</label>
-<label><input type="radio" name="q26" value="2"> manchmal</label>
-<label><input type="radio" name="q26" value="3"> häufig</label>
-<label><input type="radio" name="q26" value="4"> immer</label>
+<label><input name="q26" type="radio" value="0"/> niemals</label>
+<label><input name="q26" type="radio" value="1"/> selten</label>
+<label><input name="q26" type="radio" value="2"/> manchmal</label>
+<label><input name="q26" type="radio" value="3"/> häufig</label>
+<label><input name="q26" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>27. Beschäftigt er sich mit speziellen Gebieten oder Dingen in auffälliger Intensität?</strong></p>
-<label><input type="radio" name="q27" value="0"> niemals</label>
-<label><input type="radio" name="q27" value="1"> selten</label>
-<label><input type="radio" name="q27" value="2"> manchmal</label>
-<label><input type="radio" name="q27" value="3"> häufig</label>
-<label><input type="radio" name="q27" value="4"> immer</label>
+<label><input name="q27" type="radio" value="0"/> niemals</label>
+<label><input name="q27" type="radio" value="1"/> selten</label>
+<label><input name="q27" type="radio" value="2"/> manchmal</label>
+<label><input name="q27" type="radio" value="3"/> häufig</label>
+<label><input name="q27" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>28. Zeigt er ein überdurchschnittliches Wissen oder Fähigkeiten in einem speziellen Gebiet?</strong></p>
-<label><input type="radio" name="q28" value="0"> niemals</label>
-<label><input type="radio" name="q28" value="1"> selten</label>
-<label><input type="radio" name="q28" value="2"> manchmal</label>
-<label><input type="radio" name="q28" value="3"> häufig</label>
-<label><input type="radio" name="q28" value="4"> immer</label>
+<label><input name="q28" type="radio" value="0"/> niemals</label>
+<label><input name="q28" type="radio" value="1"/> selten</label>
+<label><input name="q28" type="radio" value="2"/> manchmal</label>
+<label><input name="q28" type="radio" value="3"/> häufig</label>
+<label><input name="q28" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>29. Liest er Bücher vorrangig zur Information (Lexika, Sachbücher), aber wenig altersgemäße Geschichten?</strong></p>
-<label><input type="radio" name="q29" value="0"> niemals</label>
-<label><input type="radio" name="q29" value="1"> selten</label>
-<label><input type="radio" name="q29" value="2"> manchmal</label>
-<label><input type="radio" name="q29" value="3"> häufig</label>
-<label><input type="radio" name="q29" value="4"> immer</label>
+<label><input name="q29" type="radio" value="0"/> niemals</label>
+<label><input name="q29" type="radio" value="1"/> selten</label>
+<label><input name="q29" type="radio" value="2"/> manchmal</label>
+<label><input name="q29" type="radio" value="3"/> häufig</label>
+<label><input name="q29" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>30. Gab es Dinge, die er in einer speziellen Weise oder Reihenfolge ausführen musste?</strong></p>
-<label><input type="radio" name="q30" value="0"> niemals</label>
-<label><input type="radio" name="q30" value="1"> selten</label>
-<label><input type="radio" name="q30" value="2"> manchmal</label>
-<label><input type="radio" name="q30" value="3"> häufig</label>
-<label><input type="radio" name="q30" value="4"> immer</label>
+<label><input name="q30" type="radio" value="0"/> niemals</label>
+<label><input name="q30" type="radio" value="1"/> selten</label>
+<label><input name="q30" type="radio" value="2"/> manchmal</label>
+<label><input name="q30" type="radio" value="3"/> häufig</label>
+<label><input name="q30" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>31. Zeigt er eine starke Reaktion auf Veränderungen im gewohnten Ablauf?</strong></p>
-<label><input type="radio" name="q31" value="0"> niemals</label>
-<label><input type="radio" name="q31" value="1"> selten</label>
-<label><input type="radio" name="q31" value="2"> manchmal</label>
-<label><input type="radio" name="q31" value="3"> häufig</label>
-<label><input type="radio" name="q31" value="4"> immer</label>
+<label><input name="q31" type="radio" value="0"/> niemals</label>
+<label><input name="q31" type="radio" value="1"/> selten</label>
+<label><input name="q31" type="radio" value="2"/> manchmal</label>
+<label><input name="q31" type="radio" value="3"/> häufig</label>
+<label><input name="q31" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>32. Wird er ängstlich oder panisch, wenn außerplanmäßige Ereignisse auftreten?</strong></p>
-<label><input type="radio" name="q32" value="0"> niemals</label>
-<label><input type="radio" name="q32" value="1"> selten</label>
-<label><input type="radio" name="q32" value="2"> manchmal</label>
-<label><input type="radio" name="q32" value="3"> häufig</label>
-<label><input type="radio" name="q32" value="4"> immer</label>
+<label><input name="q32" type="radio" value="0"/> niemals</label>
+<label><input name="q32" type="radio" value="1"/> selten</label>
+<label><input name="q32" type="radio" value="2"/> manchmal</label>
+<label><input name="q32" type="radio" value="3"/> häufig</label>
+<label><input name="q32" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>33. Zeigt er ungeschickte und unkoordinierte motorische Bewegungen?</strong></p>
-<label><input type="radio" name="q33" value="0"> niemals</label>
-<label><input type="radio" name="q33" value="1"> selten</label>
-<label><input type="radio" name="q33" value="2"> manchmal</label>
-<label><input type="radio" name="q33" value="3"> häufig</label>
-<label><input type="radio" name="q33" value="4"> immer</label>
+<label><input name="q33" type="radio" value="0"/> niemals</label>
+<label><input name="q33" type="radio" value="1"/> selten</label>
+<label><input name="q33" type="radio" value="2"/> manchmal</label>
+<label><input name="q33" type="radio" value="3"/> häufig</label>
+<label><input name="q33" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>34. Hat er einen merkwürdigen, auffälligen Gang?</strong></p>
-<label><input type="radio" name="q34" value="0"> niemals</label>
-<label><input type="radio" name="q34" value="1"> selten</label>
-<label><input type="radio" name="q34" value="2"> manchmal</label>
-<label><input type="radio" name="q34" value="3"> häufig</label>
-<label><input type="radio" name="q34" value="4"> immer</label>
+<label><input name="q34" type="radio" value="0"/> niemals</label>
+<label><input name="q34" type="radio" value="1"/> selten</label>
+<label><input name="q34" type="radio" value="2"/> manchmal</label>
+<label><input name="q34" type="radio" value="3"/> häufig</label>
+<label><input name="q34" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>35. Flattert(e) er auffällig mit den Händen z. B. bei Aufregung?</strong></p>
-<label><input type="radio" name="q35" value="0"> niemals</label>
-<label><input type="radio" name="q35" value="1"> selten</label>
-<label><input type="radio" name="q35" value="2"> manchmal</label>
-<label><input type="radio" name="q35" value="3"> häufig</label>
-<label><input type="radio" name="q35" value="4"> immer</label>
+<label><input name="q35" type="radio" value="0"/> niemals</label>
+<label><input name="q35" type="radio" value="1"/> selten</label>
+<label><input name="q35" type="radio" value="2"/> manchmal</label>
+<label><input name="q35" type="radio" value="3"/> häufig</label>
+<label><input name="q35" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>36. Zeigt(e) er andere auffällige Bewegungen (z. B. drehende Bewegungen, Schaukeln)?</strong></p>
-<label><input type="radio" name="q36" value="0"> niemals</label>
-<label><input type="radio" name="q36" value="1"> selten</label>
-<label><input type="radio" name="q36" value="2"> manchmal</label>
-<label><input type="radio" name="q36" value="3"> häufig</label>
-<label><input type="radio" name="q36" value="4"> immer</label>
+<label><input name="q36" type="radio" value="0"/> niemals</label>
+<label><input name="q36" type="radio" value="1"/> selten</label>
+<label><input name="q36" type="radio" value="2"/> manchmal</label>
+<label><input name="q36" type="radio" value="3"/> häufig</label>
+<label><input name="q36" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>37. Scheint er ein besonderes Interesse an Sinneseindrücken zu haben (Anblick, Berührung, Geräusche etc.)?</strong></p>
-<label><input type="radio" name="q37" value="0"> niemals</label>
-<label><input type="radio" name="q37" value="1"> selten</label>
-<label><input type="radio" name="q37" value="2"> manchmal</label>
-<label><input type="radio" name="q37" value="3"> häufig</label>
-<label><input type="radio" name="q37" value="4"> immer</label>
+<label><input name="q37" type="radio" value="0"/> niemals</label>
+<label><input name="q37" type="radio" value="1"/> selten</label>
+<label><input name="q37" type="radio" value="2"/> manchmal</label>
+<label><input name="q37" type="radio" value="3"/> häufig</label>
+<label><input name="q37" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>38. Hat er im Alter von 4 bis 5 Jahren versucht, Sie zu trösten wenn Sie traurig oder verletzt waren?</strong></p>
-<label><input type="radio" name="q38" value="0"> niemals</label>
-<label><input type="radio" name="q38" value="1"> selten</label>
-<label><input type="radio" name="q38" value="2"> manchmal</label>
-<label><input type="radio" name="q38" value="3"> häufig</label>
-<label><input type="radio" name="q38" value="4"> immer</label>
+<label><input name="q38" type="radio" value="0"/> niemals</label>
+<label><input name="q38" type="radio" value="1"/> selten</label>
+<label><input name="q38" type="radio" value="2"/> manchmal</label>
+<label><input name="q38" type="radio" value="3"/> häufig</label>
+<label><input name="q38" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>39. Schien er im Alter von 4 bis 5 Jahren interessiert an anderen Kindern seiner Altersgruppe, die er nicht kannte?</strong></p>
-<label><input type="radio" name="q39" value="0"> niemals</label>
-<label><input type="radio" name="q39" value="1"> selten</label>
-<label><input type="radio" name="q39" value="2"> manchmal</label>
-<label><input type="radio" name="q39" value="3"> häufig</label>
-<label><input type="radio" name="q39" value="4"> immer</label>
+<label><input name="q39" type="radio" value="0"/> niemals</label>
+<label><input name="q39" type="radio" value="1"/> selten</label>
+<label><input name="q39" type="radio" value="2"/> manchmal</label>
+<label><input name="q39" type="radio" value="3"/> häufig</label>
+<label><input name="q39" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>40. Hat er im Alter von 4 bis 5 Jahren gewöhnlich direkt in das Gesicht geschaut, wenn er mit Ihnen geredet hat?</strong></p>
-<label><input type="radio" name="q40" value="0"> niemals</label>
-<label><input type="radio" name="q40" value="1"> selten</label>
-<label><input type="radio" name="q40" value="2"> manchmal</label>
-<label><input type="radio" name="q40" value="3"> häufig</label>
-<label><input type="radio" name="q40" value="4"> immer</label>
+<label><input name="q40" type="radio" value="0"/> niemals</label>
+<label><input name="q40" type="radio" value="1"/> selten</label>
+<label><input name="q40" type="radio" value="2"/> manchmal</label>
+<label><input name="q40" type="radio" value="3"/> häufig</label>
+<label><input name="q40" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>41. Konnte er im Alter von 4 bis 5 Jahren Freude, Trauer, Wut, Furcht mimisch ausdrücken?</strong></p>
-<label><input type="radio" name="q41" value="0"> niemals</label>
-<label><input type="radio" name="q41" value="1"> selten</label>
-<label><input type="radio" name="q41" value="2"> manchmal</label>
-<label><input type="radio" name="q41" value="3"> häufig</label>
-<label><input type="radio" name="q41" value="4"> immer</label>
+<label><input name="q41" type="radio" value="0"/> niemals</label>
+<label><input name="q41" type="radio" value="1"/> selten</label>
+<label><input name="q41" type="radio" value="2"/> manchmal</label>
+<label><input name="q41" type="radio" value="3"/> häufig</label>
+<label><input name="q41" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>42. Konnte man im Gesicht erkennen wie es ihm ging, als er 4 bis 5 Jahre alt war?</strong></p>
-<label><input type="radio" name="q42" value="0"> niemals</label>
-<label><input type="radio" name="q42" value="1"> selten</label>
-<label><input type="radio" name="q42" value="2"> manchmal</label>
-<label><input type="radio" name="q42" value="3"> häufig</label>
-<label><input type="radio" name="q42" value="4"> immer</label>
+<label><input name="q42" type="radio" value="0"/> niemals</label>
+<label><input name="q42" type="radio" value="1"/> selten</label>
+<label><input name="q42" type="radio" value="2"/> manchmal</label>
+<label><input name="q42" type="radio" value="3"/> häufig</label>
+<label><input name="q42" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>43. Hat er im Alter von 4 bis 5 Jahren auf Dinge um ihn herum gezeigt, einfach um Sie darauf aufmerksam zu machen?</strong></p>
-<label><input type="radio" name="q43" value="0"> niemals</label>
-<label><input type="radio" name="q43" value="1"> selten</label>
-<label><input type="radio" name="q43" value="2"> manchmal</label>
-<label><input type="radio" name="q43" value="3"> häufig</label>
-<label><input type="radio" name="q43" value="4"> immer</label>
+<label><input name="q43" type="radio" value="0"/> niemals</label>
+<label><input name="q43" type="radio" value="1"/> selten</label>
+<label><input name="q43" type="radio" value="2"/> manchmal</label>
+<label><input name="q43" type="radio" value="3"/> häufig</label>
+<label><input name="q43" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>44. Hat er im Alter von 4 bis 5 Jahren zurückgelächelt, wenn er von jemandem angelächelt wurde?</strong></p>
-<label><input type="radio" name="q44" value="0"> niemals</label>
-<label><input type="radio" name="q44" value="1"> selten</label>
-<label><input type="radio" name="q44" value="2"> manchmal</label>
-<label><input type="radio" name="q44" value="3"> häufig</label>
-<label><input type="radio" name="q44" value="4"> immer</label>
+<label><input name="q44" type="radio" value="0"/> niemals</label>
+<label><input name="q44" type="radio" value="1"/> selten</label>
+<label><input name="q44" type="radio" value="2"/> manchmal</label>
+<label><input name="q44" type="radio" value="3"/> häufig</label>
+<label><input name="q44" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>45. Hat er im Alter von 4 bis 5 Jahren Dinge mit Ihnen geteilt (z. B. Essen oder Spielsachen)?</strong></p>
-<label><input type="radio" name="q45" value="0"> niemals</label>
-<label><input type="radio" name="q45" value="1"> selten</label>
-<label><input type="radio" name="q45" value="2"> manchmal</label>
-<label><input type="radio" name="q45" value="3"> häufig</label>
-<label><input type="radio" name="q45" value="4"> immer</label>
+<label><input name="q45" type="radio" value="0"/> niemals</label>
+<label><input name="q45" type="radio" value="1"/> selten</label>
+<label><input name="q45" type="radio" value="2"/> manchmal</label>
+<label><input name="q45" type="radio" value="3"/> häufig</label>
+<label><input name="q45" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>46. Schien er im Alter von 4 bis 5 Jahren daran interessiert, dass Sie an seiner Freude teilnehmen?</strong></p>
-<label><input type="radio" name="q46" value="0"> niemals</label>
-<label><input type="radio" name="q46" value="1"> selten</label>
-<label><input type="radio" name="q46" value="2"> manchmal</label>
-<label><input type="radio" name="q46" value="3"> häufig</label>
-<label><input type="radio" name="q46" value="4"> immer</label>
+<label><input name="q46" type="radio" value="0"/> niemals</label>
+<label><input name="q46" type="radio" value="1"/> selten</label>
+<label><input name="q46" type="radio" value="2"/> manchmal</label>
+<label><input name="q46" type="radio" value="3"/> häufig</label>
+<label><input name="q46" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>47. Hat er im Alter von 4 bis 5 Jahren spontan andere Personen nachgeahmt (z. B. Kochen)?</strong></p>
-<label><input type="radio" name="q47" value="0"> niemals</label>
-<label><input type="radio" name="q47" value="1"> selten</label>
-<label><input type="radio" name="q47" value="2"> manchmal</label>
-<label><input type="radio" name="q47" value="3"> häufig</label>
-<label><input type="radio" name="q47" value="4"> immer</label>
+<label><input name="q47" type="radio" value="0"/> niemals</label>
+<label><input name="q47" type="radio" value="1"/> selten</label>
+<label><input name="q47" type="radio" value="2"/> manchmal</label>
+<label><input name="q47" type="radio" value="3"/> häufig</label>
+<label><input name="q47" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>48. Hat er sich im Alter von 4 bis 5 Jahren spontan an Gruppenspielen beteiligt?</strong></p>
-<label><input type="radio" name="q48" value="0"> niemals</label>
-<label><input type="radio" name="q48" value="1"> selten</label>
-<label><input type="radio" name="q48" value="2"> manchmal</label>
-<label><input type="radio" name="q48" value="3"> häufig</label>
-<label><input type="radio" name="q48" value="4"> immer</label>
+<label><input name="q48" type="radio" value="0"/> niemals</label>
+<label><input name="q48" type="radio" value="1"/> selten</label>
+<label><input name="q48" type="radio" value="2"/> manchmal</label>
+<label><input name="q48" type="radio" value="3"/> häufig</label>
+<label><input name="q48" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>49. Spielte er im Alter von 4 bis 5 Jahren ausgedachte Spiele mit anderen Kindern?</strong></p>
-<label><input type="radio" name="q49" value="0"> niemals</label>
-<label><input type="radio" name="q49" value="1"> selten</label>
-<label><input type="radio" name="q49" value="2"> manchmal</label>
-<label><input type="radio" name="q49" value="3"> häufig</label>
-<label><input type="radio" name="q49" value="4"> immer</label>
+<label><input name="q49" type="radio" value="0"/> niemals</label>
+<label><input name="q49" type="radio" value="1"/> selten</label>
+<label><input name="q49" type="radio" value="2"/> manchmal</label>
+<label><input name="q49" type="radio" value="3"/> häufig</label>
+<label><input name="q49" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>50. Spielte er im Alter von 4 bis 5 Jahren kooperativ bei Gruppenspielen?</strong></p>
-<label><input type="radio" name="q50" value="0"> niemals</label>
-<label><input type="radio" name="q50" value="1"> selten</label>
-<label><input type="radio" name="q50" value="2"> manchmal</label>
-<label><input type="radio" name="q50" value="3"> häufig</label>
-<label><input type="radio" name="q50" value="4"> immer</label>
+<label><input name="q50" type="radio" value="0"/> niemals</label>
+<label><input name="q50" type="radio" value="1"/> selten</label>
+<label><input name="q50" type="radio" value="2"/> manchmal</label>
+<label><input name="q50" type="radio" value="3"/> häufig</label>
+<label><input name="q50" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>51. Schien er im Alter von 4 bis 5 Jahren mehr an einem bestimmten Teil eines Spielzeugs interessiert als am eigentlichen Spiel?</strong></p>
-<label><input type="radio" name="q51" value="0"> niemals</label>
-<label><input type="radio" name="q51" value="1"> selten</label>
-<label><input type="radio" name="q51" value="2"> manchmal</label>
-<label><input type="radio" name="q51" value="3"> häufig</label>
-<label><input type="radio" name="q51" value="4"> immer</label>
+<label><input name="q51" type="radio" value="0"/> niemals</label>
+<label><input name="q51" type="radio" value="1"/> selten</label>
+<label><input name="q51" type="radio" value="2"/> manchmal</label>
+<label><input name="q51" type="radio" value="3"/> häufig</label>
+<label><input name="q51" type="radio" value="4"/> immer</label>
 </div>
 <div class="question"><p><strong>52. War Ihr Kind zwei Jahre oder älter als es die ersten Wörter gesprochen hat?</strong></p>
-<label><input type="radio" name="q52" value="Ja"> Ja</label>
-<label><input type="radio" name="q52" value="Nein"> Nein</label>
+<label><input name="q52" type="radio" value="Ja"/> Ja</label>
+<label><input name="q52" type="radio" value="Nein"/> Nein</label>
 </div>
 <div class="question"><p><strong>53. War er drei Jahre oder älter, als er anfing erste sinnhafte kleine Sätze (3 bis 4 Wörter) zu bilden?</strong></p>
-<label><input type="radio" name="q53" value="Ja"> Ja</label>
-<label><input type="radio" name="q53" value="Nein"> Nein</label>
+<label><input name="q53" type="radio" value="Ja"/> Ja</label>
+<label><input name="q53" type="radio" value="Nein"/> Nein</label>
 </div>
 <div class="question"><p><strong>54. Wiederholte er jemals häufig Wörter oder Sätze direkt nachdem er es gehört hatte?</strong></p>
-<label><input type="radio" name="q54" value="Ja"> Ja</label>
-<label><input type="radio" name="q54" value="Nein"> Nein</label>
+<label><input name="q54" type="radio" value="Ja"/> Ja</label>
+<label><input name="q54" type="radio" value="Nein"/> Nein</label>
 </div>
 <div class="question"><p><strong>55. Wiederholt er zur Zeit und/oder wiederholte er früher häufig Wörter oder Sätze?</strong></p>
-<label><input type="radio" name="q55" value="Ja"> Ja</label>
-<label><input type="radio" name="q55" value="Nein"> Nein</label>
+<label><input name="q55" type="radio" value="Ja"/> Ja</label>
+<label><input name="q55" type="radio" value="Nein"/> Nein</label>
 </div>
 <div class="question"><p><strong>56. Verwechselt er zur Zeit oder verwechselte er früher die persönlichen Fürworter („du“, „er“ statt „ich“)?</strong></p>
-<label><input type="radio" name="q56" value="Ja"> Ja</label>
-<label><input type="radio" name="q56" value="Nein"> Nein</label>
+<label><input name="q56" type="radio" value="Ja"/> Ja</label>
+<label><input name="q56" type="radio" value="Nein"/> Nein</label>
 </div>
 <div class="question"><p><strong>57. Hat er jemals Wörter benutzt, die er selber erfunden hat (z. B. „heißer Regen“ statt „Dampf“)?</strong></p>
-<label><input type="radio" name="q57" value="Ja"> Ja</label>
-<label><input type="radio" name="q57" value="Nein"> Nein</label>
+<label><input name="q57" type="radio" value="Ja"/> Ja</label>
+<label><input name="q57" type="radio" value="Nein"/> Nein</label>
 </div>
-
-        <button type="button" onclick="berechneAuswertung()">Auswertung durchführen</button>
-<button type="button" onclick="exportPDF()">Als PDF exportieren</button>
+<button onclick="berechneAuswertung()" type="button">Auswertung durchführen</button>
 <div style="margin-top:40px; padding: 20px; border: 2px solid #ccc; background: #f1f1f1;">
-    <h2>Auswertung</h2>
-    <p><strong>Skala A:</strong> <span id="auswertung-a">-</span></p>
-    <p><strong>Skala B:</strong> <span id="auswertung-b">-</span></p>
-    <p><strong>Skala C:</strong> <span id="auswertung-c">-</span></p>
-    <p><strong>Skala D:</strong> <span id="auswertung-d">-</span></p>
-    <p><strong>Gesamtsumme:</strong> <span id="auswertung-gesamt">-</span></p>
-    <p><strong>Beurteilung:</strong> <span id="auswertung-diagnose">-</span></p>
-    <button type="button" onclick="berechneAuswertung()">Auswertung durchführen</button>
+<h2>Auswertung</h2>
+<p><strong>Skala A:</strong> <span id="auswertung-a">-</span></p>
+<p><strong>Skala B:</strong> <span id="auswertung-b">-</span></p>
+<p><strong>Skala C:</strong> <span id="auswertung-c">-</span></p>
+<p><strong>Skala D:</strong> <span id="auswertung-d">-</span></p>
+<p><strong>Gesamtsumme:</strong> <span id="auswertung-gesamt">-</span></p>
+<p><strong>Beurteilung:</strong> <span id="auswertung-diagnose">-</span></p>
+<button onclick="berechneAuswertung()" type="button">Auswertung durchführen</button>
 </div>
-
 <script>
 function berechneAuswertung() {
     const form = document.getElementById('mbas-form');
@@ -450,44 +515,63 @@ function berechneAuswertung() {
         }
     }
 
+    // Offiziell umgepolte Items laut MBAS-Dokumentation
+    const umgepolteItems = ["q7","q8","q12","q18","q19","q20","q21","q22","q23","q24","q25",
+                            "q26","q27","q28","q29","q30","q31","q32","q33","q34","q35","q36","q37","q51"];
+
+    // Umpolung durchführen
+    umgepolteItems.forEach(item => {
+        if (werte[item] !== undefined) {
+            werte[item] = 4 - werte[item];
+        }
+    });
+
     let skalen = {
-        A: ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q16", "q17", "q23", "q25", "q38", "q39", "q48", "q49", "q50"],
-        B: ["q10", "q11", "q12", "q13", "q15", "q22", "q41", "q42", "q43", "q44", "q45", "q46", "q47"],
-        C: ["q9", "q14", "q24", "q26", "q30", "q31", "q32", "q35", "q36", "q37", "q40", "q51"],
-        D: ["q18", "q19", "q20", "q21", "q27", "q28", "q29", "q33", "q34"]
+        A: ["q1","q2","q3","q4","q5","q6","q7","q8","q16","q17","q23","q25","q38","q39","q48","q49","q50"],
+        B: ["q10","q11","q12","q13","q15","q22","q41","q42","q43","q44","q45","q46","q47"],
+        C: ["q9","q14","q24","q26","q30","q31","q32","q35","q36","q37","q40","q51"],
+        D: ["q18","q19","q20","q21","q27","q28","q29","q33","q34"]
     };
 
     let ergebnisse = {};
     let gesamtsumme = 0;
+    let fehlend = 0;
 
     for (let skala in skalen) {
         let summe = 0;
         skalen[skala].forEach(q => {
-            summe += werte[q] !== undefined ? werte[q] : 2; // fehlende Werte = 2
+            if (werte[q] !== undefined) {
+                summe += werte[q];
+            } else {
+                summe += 2; // fehlende Antworten als "manchmal" (2) bewertet
+                fehlend += 1;
+            }
         });
         ergebnisse[skala] = summe;
         gesamtsumme += summe;
     }
 
-    document.getElementById('auswertung-a').textContent = ergebnisse.A;
-    document.getElementById('auswertung-b').textContent = ergebnisse.B;
-    document.getElementById('auswertung-c').textContent = ergebnisse.C;
-    document.getElementById('auswertung-d').textContent = ergebnisse.D;
-    document.getElementById('auswertung-gesamt').textContent = gesamtsumme;
+    document.getElementById('auswertung-a').textContent = ergebnisse.A + " (Cut-Off: 38)";
+    document.getElementById('auswertung-b').textContent = ergebnisse.B + " (Cut-Off: 21)";
+    document.getElementById('auswertung-c').textContent = ergebnisse.C + " (Cut-Off: 20)";
+    document.getElementById('auswertung-d').textContent = ergebnisse.D + " (Cut-Off: 16)";
+    document.getElementById('auswertung-gesamt').textContent = gesamtsumme + " (Cut-Off: 103)";
 
     const s52 = form.querySelector('input[name="q52"]:checked')?.value;
     const s53 = form.querySelector('input[name="q53"]:checked')?.value;
 
     let diagnose = "";
-    if (gesamtsumme >= 70) {
-        if (ergebnisse.A >= 30) {
-            if (s52 === "Nein" && s53 === "Nein") {
-                diagnose = "Verdacht auf Asperger-Syndrom";
-            } else if (s52 === "Ja" || s53 === "Ja") {
-                diagnose = "Verdacht auf High-functioning-Autismus";
-            }
-        } else {
-            diagnose = "Verdacht auf Autismus (unspezifisch)";
+    if (fehlend > 2) {
+        diagnose = "Auswertung nicht möglich: mehr als 2 fehlende Antworten.";
+    } else if (gesamtsumme >= 103) {
+        if (s52 === "Nein" && s53 === "Nein") {
+            diagnose = (ergebnisse.A >= 38) ? 
+                "Verdachtsdiagnose Asperger-Syndrom (Kriterium 2)" :
+                "Verdachtsdiagnose Asperger-Syndrom (Kriterium 1)";
+        } else if (s52 === "Ja" || s53 === "Ja") {
+            diagnose = (ergebnisse.A >= 38) ? 
+                "Verdachtsdiagnose High-functioning-Autismus (Kriterium 2)" :
+                "Verdachtsdiagnose High-functioning-Autismus (Kriterium 1)";
         }
     } else {
         diagnose = "Keine autistische Störung (Cut-Off nicht erreicht)";
@@ -496,56 +580,20 @@ function berechneAuswertung() {
     document.getElementById('auswertung-diagnose').textContent = diagnose;
 }
 </script>
-
-    </form>
-
-    <script>
-        async function exportPDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            const form = document.getElementById('mbas-form');
-            const inputs = form.querySelectorAll('input');
-            let y = 10;
-            let written = new Set();
-
-            for (const el of inputs) {
-                if ((el.type === 'text' || el.type === 'date') && el.value) {
-                    doc.text(el.name + ': ' + el.value, 10, y);
-                    y += 10;
-                } else if ((el.type === 'radio') && el.checked && !written.has(el.name)) {
-                    doc.text(el.name + ': ' + el.value, 10, y);
-                    written.add(el.name);
-                    y += 10;
-                }
-                if (y > 280) {
-                    doc.addPage();
-                    y = 10;
-                }
-            }
-            doc.save('MBAS_Auswertung.pdf');
-        }
-    </script>
+<br/><br/></form><div id="bild_zusammenfassung" style="border:1px solid #ccc;padding:10px;margin:10px 0;background:#fff;"></div>
 
 <script>
-function zufallsausfüllen() {
-    const form = document.getElementById('mbas-form');
-    const inputs = form.querySelectorAll('input');
-
-    inputs.forEach(input => {
-        if (input.type === 'radio') {
-            const name = input.name;
-            const radios = form.querySelectorAll(`input[name="${name}"]`);
-            const filtered = Array.from(radios).filter(r => !r.disabled);
-            const random = filtered[Math.floor(Math.random() * filtered.length)];
-            if (random) random.checked = true;
-        } else if (input.type === 'text') {
-            input.value = "Zufallswert";
-        } else if (input.type === 'date') {
-            input.value = "2023-01-01";
-        }
-    });
+function exportPageAsPDF(){
+    const element = document.body;
+    const opt = {
+        margin: [0.3, 0.3, 0.3, 0.3],
+        filename: 'MBAS_Gesamte_Seite_Kompakt.pdf',
+        image: { type: 'jpeg', quality: 0.95 },
+        html2canvas: { scale: 1.5, useCORS: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+    html2pdf().set(opt).from(element).save();
 }
-</script>
-
-</body>
+</script></body>
 </html>
